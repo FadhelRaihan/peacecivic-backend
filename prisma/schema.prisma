@@ -1,0 +1,185 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ================= ENUMS =================
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+enum ModuleCategory {
+  KEWARGANEGARAAN
+  BUDAYA
+}
+
+enum TriggerType {
+  READ_MODULE
+  CHAT_COUNT
+  PROJECT_UPLOAD
+}
+
+enum MissionStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum ProjectStatus {
+  DRAFT
+  PLAN_SUBMITTED
+  PLAN_APPROVED
+  REPORT_SUBMITTED
+  COMPLETED
+}
+
+// ================= MODELS =================
+
+model User {
+  id            String   @id @default(uuid())
+  full_name     String
+  email         String   @unique
+  password_hash String
+  role          Role     @default(STUDENT)
+  class_room    String?
+  avatar_url    String?
+  points        Int      @default(0)
+  created_at    DateTime @default(now())
+
+  // Relasi
+  team_members  TeamMember[]
+  progress      UserProgress[]
+  missions      UserMission[]
+  messages      Message[]
+  
+  // Relasi Gamifikasi
+  badges_received UserBadge[] @relation("ReceivedBadges")
+  badges_given    UserBadge[] @relation("GivenBadges")
+}
+
+model Team {
+  id          String   @id @default(uuid())
+  team_name   String
+  invite_code String   @unique
+  created_at  DateTime @default(now())
+
+  // Relasi
+  members     TeamMember[]
+  messages    Message[]
+  projects    Project[]
+}
+
+model TeamMember {
+  id        String   @id @default(uuid())
+  team_id   String
+  user_id   String
+  joined_at DateTime @default(now())
+
+  team      Team     @relation(fields: [team_id], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([team_id, user_id]) 
+}
+
+model Module {
+  id            String         @id @default(uuid())
+  title         String
+  slug          String         @unique
+  video_url     String?
+  pdf_url       String?
+  category      ModuleCategory
+  thumbnail_url String?
+  
+  progress      UserProgress[]
+}
+
+model UserProgress {
+  id           String   @id @default(uuid())
+  user_id      String
+  module_id    String
+  is_completed Boolean  @default(false)
+  completed_at DateTime?
+
+  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  module       Module   @relation(fields: [module_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, module_id])
+}
+
+model Mission {
+  id            String      @id @default(uuid())
+  title         String
+  description   String      @db.Text
+  points_reward Int
+  trigger_type  TriggerType
+  
+  user_missions UserMission[]
+}
+
+model UserMission {
+  id          String        @id @default(uuid())
+  user_id     String
+  mission_id  String
+  status      MissionStatus @default(IN_PROGRESS)
+  updated_at  DateTime      @updatedAt
+
+  user        User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  mission     Mission       @relation(fields: [mission_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, mission_id])
+}
+
+model Badge {
+  id             String      @id @default(uuid())
+  badge_name     String
+  badge_icon_url String
+  description    String      @db.Text
+
+  user_badges    UserBadge[]
+}
+
+model UserBadge {
+  id          String   @id @default(uuid())
+  user_id     String
+  badge_id    String
+  awarded_by  String
+  awarded_at  DateTime @default(now())
+
+  user        User     @relation("ReceivedBadges", fields: [user_id], references: [id], onDelete: Cascade)
+  teacher     User     @relation("GivenBadges", fields: [awarded_by], references: [id])
+  badge       Badge    @relation(fields: [badge_id], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id           String   @id @default(uuid())
+  sender_id    String
+  team_id      String?  // Null jika ini adalah pesan Forum Terbuka
+  is_forum     Boolean  @default(false)
+  message_body String   @db.Text
+  created_at   DateTime @default(now())
+
+  sender       User     @relation(fields: [sender_id], references: [id], onDelete: Cascade)
+  team         Team?    @relation(fields: [team_id], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id               String        @id @default(uuid())
+  team_id          String
+  title            String
+  plan_file_url    String?
+  report_files     String[]
+  status           ProjectStatus @default(DRAFT)
+  points_awarded   Int?
+  teacher_feedback String?       @db.Text
+  created_at       DateTime      @default(now())
+
+  team             Team          @relation(fields: [team_id], references: [id], onDelete: Cascade)
+}

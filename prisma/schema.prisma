@@ -115,13 +115,16 @@ model UserProgress {
 }
 
 model Mission {
-  id            String      @id @default(uuid())
-  title         String
-  description   String      @db.Text
-  points_reward Int
-  trigger_type  TriggerType
+  id              String      @id @default(uuid())
+  title           String
+  description     String      @db.Text
+  points_reward   Int
+  trigger_type    TriggerType
+  trigger_count   Int         @default(1)
+  badge_reward_id String?
   
-  user_missions UserMission[]
+  badge_reward    Badge?       @relation("BadgeReward", fields: [badge_reward_id], references: [id])
+  user_missions   UserMission[]
 }
 
 model UserMission {
@@ -138,24 +141,27 @@ model UserMission {
 }
 
 model Badge {
-  id             String      @id @default(uuid())
-  badge_name     String
-  badge_icon_url String
-  description    String      @db.Text
+  id              String      @id @default(uuid())
+  badge_name      String
+  badge_icon_url  String
+  description     String      @db.Text
 
-  user_badges    UserBadge[]
+  user_badges     UserBadge[]
+  mission_rewards Mission[]   @relation("BadgeReward")
 }
 
 model UserBadge {
   id          String   @id @default(uuid())
   user_id     String
   badge_id    String
-  awarded_by  String
+  awarded_by  String?
   awarded_at  DateTime @default(now())
 
   user        User     @relation("ReceivedBadges", fields: [user_id], references: [id], onDelete: Cascade)
-  teacher     User     @relation("GivenBadges", fields: [awarded_by], references: [id])
+  teacher     User?    @relation("GivenBadges", fields: [awarded_by], references: [id])
   badge       Badge    @relation(fields: [badge_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, badge_id])
 }
 
 model Message {
@@ -182,4 +188,10 @@ model Project {
   created_at       DateTime      @default(now())
 
   team             Team          @relation(fields: [team_id], references: [id], onDelete: Cascade)
+}
+
+model SystemSetting {
+  id    String @id @default(uuid())
+  key   String @unique
+  value String @db.Text
 }

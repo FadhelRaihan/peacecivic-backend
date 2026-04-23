@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../lib/prisma";
-import { ProjectStatus, Role, MissionStatus } from "../generated/client";
+import { ProjectStatus, Role, MissionStatus, TriggerType } from "../generated/client";
+import { checkMissions } from "../services/automation.service";
 
 // Siswa: Submit Project Plan
 export const submitProjectPlan = async (req: any, res: Response) => {
@@ -196,13 +197,10 @@ export const finalizeProject = async (req: any, res: Response) => {
         });
     }
 
-        // // Complete Mission if provided
-        // if (missionId) {
-        //     await prisma.userMission.updateMany({
-        //         where: { mission_id: missionId, user_id: { in: memberIds } },
-        //         data: { status: MissionStatus.COMPLETED }
-        //     });
-        // }
+        // Automation: Check Missions for all members
+        for (const uid of memberIds) {
+            await checkMissions(uid, TriggerType.PROJECT_UPLOAD);
+        }
 
         res.status(200).json({
             message: 'Proyek selesai! Poin dan Lencana telah diberikan kepada seluruh anggota tim.',

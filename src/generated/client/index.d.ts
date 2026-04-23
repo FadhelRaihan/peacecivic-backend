@@ -68,6 +68,11 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
  * 
  */
 export type Project = $Result.DefaultSelection<Prisma.$ProjectPayload>
+/**
+ * Model SystemSetting
+ * 
+ */
+export type SystemSetting = $Result.DefaultSelection<Prisma.$SystemSettingPayload>
 
 /**
  * Enums
@@ -369,6 +374,16 @@ export class PrismaClient<
     * ```
     */
   get project(): Prisma.ProjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.systemSetting`: Exposes CRUD operations for the **SystemSetting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SystemSettings
+    * const systemSettings = await prisma.systemSetting.findMany()
+    * ```
+    */
+  get systemSetting(): Prisma.SystemSettingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -813,7 +828,8 @@ export namespace Prisma {
     Badge: 'Badge',
     UserBadge: 'UserBadge',
     Message: 'Message',
-    Project: 'Project'
+    Project: 'Project',
+    SystemSetting: 'SystemSetting'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -829,7 +845,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "team" | "teamMember" | "module" | "userProgress" | "mission" | "userMission" | "badge" | "userBadge" | "message" | "project"
+      modelProps: "user" | "team" | "teamMember" | "module" | "userProgress" | "mission" | "userMission" | "badge" | "userBadge" | "message" | "project" | "systemSetting"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1647,6 +1663,80 @@ export namespace Prisma {
           }
         }
       }
+      SystemSetting: {
+        payload: Prisma.$SystemSettingPayload<ExtArgs>
+        fields: Prisma.SystemSettingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SystemSettingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SystemSettingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          findFirst: {
+            args: Prisma.SystemSettingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SystemSettingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          findMany: {
+            args: Prisma.SystemSettingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>[]
+          }
+          create: {
+            args: Prisma.SystemSettingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          createMany: {
+            args: Prisma.SystemSettingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SystemSettingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>[]
+          }
+          delete: {
+            args: Prisma.SystemSettingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          update: {
+            args: Prisma.SystemSettingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          deleteMany: {
+            args: Prisma.SystemSettingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SystemSettingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SystemSettingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>[]
+          }
+          upsert: {
+            args: Prisma.SystemSettingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemSettingPayload>
+          }
+          aggregate: {
+            args: Prisma.SystemSettingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSystemSetting>
+          }
+          groupBy: {
+            args: Prisma.SystemSettingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SystemSettingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SystemSettingCountArgs<ExtArgs>
+            result: $Utils.Optional<SystemSettingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1766,6 +1856,7 @@ export namespace Prisma {
     userBadge?: UserBadgeOmit
     message?: MessageOmit
     project?: ProjectOmit
+    systemSetting?: SystemSettingOmit
   }
 
   /* Types for Logging */
@@ -2034,10 +2125,12 @@ export namespace Prisma {
 
   export type BadgeCountOutputType = {
     user_badges: number
+    mission_rewards: number
   }
 
   export type BadgeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user_badges?: boolean | BadgeCountOutputTypeCountUser_badgesArgs
+    mission_rewards?: boolean | BadgeCountOutputTypeCountMission_rewardsArgs
   }
 
   // Custom InputTypes
@@ -2056,6 +2149,13 @@ export namespace Prisma {
    */
   export type BadgeCountOutputTypeCountUser_badgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserBadgeWhereInput
+  }
+
+  /**
+   * BadgeCountOutputType without action
+   */
+  export type BadgeCountOutputTypeCountMission_rewardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MissionWhereInput
   }
 
 
@@ -7726,10 +7826,12 @@ export namespace Prisma {
 
   export type MissionAvgAggregateOutputType = {
     points_reward: number | null
+    trigger_count: number | null
   }
 
   export type MissionSumAggregateOutputType = {
     points_reward: number | null
+    trigger_count: number | null
   }
 
   export type MissionMinAggregateOutputType = {
@@ -7738,6 +7840,8 @@ export namespace Prisma {
     description: string | null
     points_reward: number | null
     trigger_type: $Enums.TriggerType | null
+    trigger_count: number | null
+    badge_reward_id: string | null
   }
 
   export type MissionMaxAggregateOutputType = {
@@ -7746,6 +7850,8 @@ export namespace Prisma {
     description: string | null
     points_reward: number | null
     trigger_type: $Enums.TriggerType | null
+    trigger_count: number | null
+    badge_reward_id: string | null
   }
 
   export type MissionCountAggregateOutputType = {
@@ -7754,16 +7860,20 @@ export namespace Prisma {
     description: number
     points_reward: number
     trigger_type: number
+    trigger_count: number
+    badge_reward_id: number
     _all: number
   }
 
 
   export type MissionAvgAggregateInputType = {
     points_reward?: true
+    trigger_count?: true
   }
 
   export type MissionSumAggregateInputType = {
     points_reward?: true
+    trigger_count?: true
   }
 
   export type MissionMinAggregateInputType = {
@@ -7772,6 +7882,8 @@ export namespace Prisma {
     description?: true
     points_reward?: true
     trigger_type?: true
+    trigger_count?: true
+    badge_reward_id?: true
   }
 
   export type MissionMaxAggregateInputType = {
@@ -7780,6 +7892,8 @@ export namespace Prisma {
     description?: true
     points_reward?: true
     trigger_type?: true
+    trigger_count?: true
+    badge_reward_id?: true
   }
 
   export type MissionCountAggregateInputType = {
@@ -7788,6 +7902,8 @@ export namespace Prisma {
     description?: true
     points_reward?: true
     trigger_type?: true
+    trigger_count?: true
+    badge_reward_id?: true
     _all?: true
   }
 
@@ -7883,6 +7999,8 @@ export namespace Prisma {
     description: string
     points_reward: number
     trigger_type: $Enums.TriggerType
+    trigger_count: number
+    badge_reward_id: string | null
     _count: MissionCountAggregateOutputType | null
     _avg: MissionAvgAggregateOutputType | null
     _sum: MissionSumAggregateOutputType | null
@@ -7910,6 +8028,9 @@ export namespace Prisma {
     description?: boolean
     points_reward?: boolean
     trigger_type?: boolean
+    trigger_count?: boolean
+    badge_reward_id?: boolean
+    badge_reward?: boolean | Mission$badge_rewardArgs<ExtArgs>
     user_missions?: boolean | Mission$user_missionsArgs<ExtArgs>
     _count?: boolean | MissionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mission"]>
@@ -7920,6 +8041,9 @@ export namespace Prisma {
     description?: boolean
     points_reward?: boolean
     trigger_type?: boolean
+    trigger_count?: boolean
+    badge_reward_id?: boolean
+    badge_reward?: boolean | Mission$badge_rewardArgs<ExtArgs>
   }, ExtArgs["result"]["mission"]>
 
   export type MissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7928,6 +8052,9 @@ export namespace Prisma {
     description?: boolean
     points_reward?: boolean
     trigger_type?: boolean
+    trigger_count?: boolean
+    badge_reward_id?: boolean
+    badge_reward?: boolean | Mission$badge_rewardArgs<ExtArgs>
   }, ExtArgs["result"]["mission"]>
 
   export type MissionSelectScalar = {
@@ -7936,19 +8063,27 @@ export namespace Prisma {
     description?: boolean
     points_reward?: boolean
     trigger_type?: boolean
+    trigger_count?: boolean
+    badge_reward_id?: boolean
   }
 
-  export type MissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "points_reward" | "trigger_type", ExtArgs["result"]["mission"]>
+  export type MissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "points_reward" | "trigger_type" | "trigger_count" | "badge_reward_id", ExtArgs["result"]["mission"]>
   export type MissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    badge_reward?: boolean | Mission$badge_rewardArgs<ExtArgs>
     user_missions?: boolean | Mission$user_missionsArgs<ExtArgs>
     _count?: boolean | MissionCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type MissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type MissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type MissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    badge_reward?: boolean | Mission$badge_rewardArgs<ExtArgs>
+  }
+  export type MissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    badge_reward?: boolean | Mission$badge_rewardArgs<ExtArgs>
+  }
 
   export type $MissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Mission"
     objects: {
+      badge_reward: Prisma.$BadgePayload<ExtArgs> | null
       user_missions: Prisma.$UserMissionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -7957,6 +8092,8 @@ export namespace Prisma {
       description: string
       points_reward: number
       trigger_type: $Enums.TriggerType
+      trigger_count: number
+      badge_reward_id: string | null
     }, ExtArgs["result"]["mission"]>
     composites: {}
   }
@@ -8351,6 +8488,7 @@ export namespace Prisma {
    */
   export interface Prisma__MissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    badge_reward<T extends Mission$badge_rewardArgs<ExtArgs> = {}>(args?: Subset<T, Mission$badge_rewardArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user_missions<T extends Mission$user_missionsArgs<ExtArgs> = {}>(args?: Subset<T, Mission$user_missionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserMissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -8386,6 +8524,8 @@ export namespace Prisma {
     readonly description: FieldRef<"Mission", 'String'>
     readonly points_reward: FieldRef<"Mission", 'Int'>
     readonly trigger_type: FieldRef<"Mission", 'TriggerType'>
+    readonly trigger_count: FieldRef<"Mission", 'Int'>
+    readonly badge_reward_id: FieldRef<"Mission", 'String'>
   }
     
 
@@ -8640,6 +8780,10 @@ export namespace Prisma {
      */
     data: MissionCreateManyInput | MissionCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MissionIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8710,6 +8854,10 @@ export namespace Prisma {
      * Limit how many Missions to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MissionIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8776,6 +8924,25 @@ export namespace Prisma {
      * Limit how many Missions to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Mission.badge_reward
+   */
+  export type Mission$badge_rewardArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    where?: BadgeWhereInput
   }
 
   /**
@@ -10049,6 +10216,7 @@ export namespace Prisma {
     badge_icon_url?: boolean
     description?: boolean
     user_badges?: boolean | Badge$user_badgesArgs<ExtArgs>
+    mission_rewards?: boolean | Badge$mission_rewardsArgs<ExtArgs>
     _count?: boolean | BadgeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["badge"]>
 
@@ -10076,6 +10244,7 @@ export namespace Prisma {
   export type BadgeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "badge_name" | "badge_icon_url" | "description", ExtArgs["result"]["badge"]>
   export type BadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user_badges?: boolean | Badge$user_badgesArgs<ExtArgs>
+    mission_rewards?: boolean | Badge$mission_rewardsArgs<ExtArgs>
     _count?: boolean | BadgeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -10085,6 +10254,7 @@ export namespace Prisma {
     name: "Badge"
     objects: {
       user_badges: Prisma.$UserBadgePayload<ExtArgs>[]
+      mission_rewards: Prisma.$MissionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10486,6 +10656,7 @@ export namespace Prisma {
   export interface Prisma__BadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user_badges<T extends Badge$user_badgesArgs<ExtArgs> = {}>(args?: Subset<T, Badge$user_badgesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mission_rewards<T extends Badge$mission_rewardsArgs<ExtArgs> = {}>(args?: Subset<T, Badge$mission_rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10936,6 +11107,30 @@ export namespace Prisma {
   }
 
   /**
+   * Badge.mission_rewards
+   */
+  export type Badge$mission_rewardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mission
+     */
+    select?: MissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mission
+     */
+    omit?: MissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MissionInclude<ExtArgs> | null
+    where?: MissionWhereInput
+    orderBy?: MissionOrderByWithRelationInput | MissionOrderByWithRelationInput[]
+    cursor?: MissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MissionScalarFieldEnum | MissionScalarFieldEnum[]
+  }
+
+  /**
    * Badge without action
    */
   export type BadgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11091,7 +11286,7 @@ export namespace Prisma {
     id: string
     user_id: string
     badge_id: string
-    awarded_by: string
+    awarded_by: string | null
     awarded_at: Date
     _count: UserBadgeCountAggregateOutputType | null
     _min: UserBadgeMinAggregateOutputType | null
@@ -11119,7 +11314,7 @@ export namespace Prisma {
     awarded_by?: boolean
     awarded_at?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    teacher?: boolean | UserBadge$teacherArgs<ExtArgs>
     badge?: boolean | BadgeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userBadge"]>
 
@@ -11130,7 +11325,7 @@ export namespace Prisma {
     awarded_by?: boolean
     awarded_at?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    teacher?: boolean | UserBadge$teacherArgs<ExtArgs>
     badge?: boolean | BadgeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userBadge"]>
 
@@ -11141,7 +11336,7 @@ export namespace Prisma {
     awarded_by?: boolean
     awarded_at?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    teacher?: boolean | UserBadge$teacherArgs<ExtArgs>
     badge?: boolean | BadgeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userBadge"]>
 
@@ -11156,17 +11351,17 @@ export namespace Prisma {
   export type UserBadgeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "badge_id" | "awarded_by" | "awarded_at", ExtArgs["result"]["userBadge"]>
   export type UserBadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    teacher?: boolean | UserBadge$teacherArgs<ExtArgs>
     badge?: boolean | BadgeDefaultArgs<ExtArgs>
   }
   export type UserBadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    teacher?: boolean | UserBadge$teacherArgs<ExtArgs>
     badge?: boolean | BadgeDefaultArgs<ExtArgs>
   }
   export type UserBadgeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    teacher?: boolean | UserBadge$teacherArgs<ExtArgs>
     badge?: boolean | BadgeDefaultArgs<ExtArgs>
   }
 
@@ -11174,14 +11369,14 @@ export namespace Prisma {
     name: "UserBadge"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      teacher: Prisma.$UserPayload<ExtArgs>
+      teacher: Prisma.$UserPayload<ExtArgs> | null
       badge: Prisma.$BadgePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       user_id: string
       badge_id: string
-      awarded_by: string
+      awarded_by: string | null
       awarded_at: Date
     }, ExtArgs["result"]["userBadge"]>
     composites: {}
@@ -11578,7 +11773,7 @@ export namespace Prisma {
   export interface Prisma__UserBadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    teacher<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    teacher<T extends UserBadge$teacherArgs<ExtArgs> = {}>(args?: Subset<T, UserBadge$teacherArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     badge<T extends BadgeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BadgeDefaultArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -12012,6 +12207,25 @@ export namespace Prisma {
      * Limit how many UserBadges to delete.
      */
     limit?: number
+  }
+
+  /**
+   * UserBadge.teacher
+   */
+  export type UserBadge$teacherArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -14282,6 +14496,980 @@ export namespace Prisma {
 
 
   /**
+   * Model SystemSetting
+   */
+
+  export type AggregateSystemSetting = {
+    _count: SystemSettingCountAggregateOutputType | null
+    _min: SystemSettingMinAggregateOutputType | null
+    _max: SystemSettingMaxAggregateOutputType | null
+  }
+
+  export type SystemSettingMinAggregateOutputType = {
+    id: string | null
+    key: string | null
+    value: string | null
+  }
+
+  export type SystemSettingMaxAggregateOutputType = {
+    id: string | null
+    key: string | null
+    value: string | null
+  }
+
+  export type SystemSettingCountAggregateOutputType = {
+    id: number
+    key: number
+    value: number
+    _all: number
+  }
+
+
+  export type SystemSettingMinAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+  }
+
+  export type SystemSettingMaxAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+  }
+
+  export type SystemSettingCountAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    _all?: true
+  }
+
+  export type SystemSettingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemSetting to aggregate.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SystemSettings
+    **/
+    _count?: true | SystemSettingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SystemSettingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SystemSettingMaxAggregateInputType
+  }
+
+  export type GetSystemSettingAggregateType<T extends SystemSettingAggregateArgs> = {
+        [P in keyof T & keyof AggregateSystemSetting]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSystemSetting[P]>
+      : GetScalarType<T[P], AggregateSystemSetting[P]>
+  }
+
+
+
+
+  export type SystemSettingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SystemSettingWhereInput
+    orderBy?: SystemSettingOrderByWithAggregationInput | SystemSettingOrderByWithAggregationInput[]
+    by: SystemSettingScalarFieldEnum[] | SystemSettingScalarFieldEnum
+    having?: SystemSettingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SystemSettingCountAggregateInputType | true
+    _min?: SystemSettingMinAggregateInputType
+    _max?: SystemSettingMaxAggregateInputType
+  }
+
+  export type SystemSettingGroupByOutputType = {
+    id: string
+    key: string
+    value: string
+    _count: SystemSettingCountAggregateOutputType | null
+    _min: SystemSettingMinAggregateOutputType | null
+    _max: SystemSettingMaxAggregateOutputType | null
+  }
+
+  type GetSystemSettingGroupByPayload<T extends SystemSettingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SystemSettingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SystemSettingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SystemSettingGroupByOutputType[P]>
+            : GetScalarType<T[P], SystemSettingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SystemSettingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["systemSetting"]>
+
+  export type SystemSettingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["systemSetting"]>
+
+  export type SystemSettingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["systemSetting"]>
+
+  export type SystemSettingSelectScalar = {
+    id?: boolean
+    key?: boolean
+    value?: boolean
+  }
+
+  export type SystemSettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "value", ExtArgs["result"]["systemSetting"]>
+
+  export type $SystemSettingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SystemSetting"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      key: string
+      value: string
+    }, ExtArgs["result"]["systemSetting"]>
+    composites: {}
+  }
+
+  type SystemSettingGetPayload<S extends boolean | null | undefined | SystemSettingDefaultArgs> = $Result.GetResult<Prisma.$SystemSettingPayload, S>
+
+  type SystemSettingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SystemSettingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SystemSettingCountAggregateInputType | true
+    }
+
+  export interface SystemSettingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SystemSetting'], meta: { name: 'SystemSetting' } }
+    /**
+     * Find zero or one SystemSetting that matches the filter.
+     * @param {SystemSettingFindUniqueArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SystemSettingFindUniqueArgs>(args: SelectSubset<T, SystemSettingFindUniqueArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SystemSetting that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SystemSettingFindUniqueOrThrowArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SystemSettingFindUniqueOrThrowArgs>(args: SelectSubset<T, SystemSettingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemSetting that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingFindFirstArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SystemSettingFindFirstArgs>(args?: SelectSubset<T, SystemSettingFindFirstArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemSetting that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingFindFirstOrThrowArgs} args - Arguments to find a SystemSetting
+     * @example
+     * // Get one SystemSetting
+     * const systemSetting = await prisma.systemSetting.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SystemSettingFindFirstOrThrowArgs>(args?: SelectSubset<T, SystemSettingFindFirstOrThrowArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SystemSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SystemSettings
+     * const systemSettings = await prisma.systemSetting.findMany()
+     * 
+     * // Get first 10 SystemSettings
+     * const systemSettings = await prisma.systemSetting.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const systemSettingWithIdOnly = await prisma.systemSetting.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SystemSettingFindManyArgs>(args?: SelectSubset<T, SystemSettingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SystemSetting.
+     * @param {SystemSettingCreateArgs} args - Arguments to create a SystemSetting.
+     * @example
+     * // Create one SystemSetting
+     * const SystemSetting = await prisma.systemSetting.create({
+     *   data: {
+     *     // ... data to create a SystemSetting
+     *   }
+     * })
+     * 
+     */
+    create<T extends SystemSettingCreateArgs>(args: SelectSubset<T, SystemSettingCreateArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SystemSettings.
+     * @param {SystemSettingCreateManyArgs} args - Arguments to create many SystemSettings.
+     * @example
+     * // Create many SystemSettings
+     * const systemSetting = await prisma.systemSetting.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SystemSettingCreateManyArgs>(args?: SelectSubset<T, SystemSettingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SystemSettings and returns the data saved in the database.
+     * @param {SystemSettingCreateManyAndReturnArgs} args - Arguments to create many SystemSettings.
+     * @example
+     * // Create many SystemSettings
+     * const systemSetting = await prisma.systemSetting.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SystemSettings and only return the `id`
+     * const systemSettingWithIdOnly = await prisma.systemSetting.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SystemSettingCreateManyAndReturnArgs>(args?: SelectSubset<T, SystemSettingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SystemSetting.
+     * @param {SystemSettingDeleteArgs} args - Arguments to delete one SystemSetting.
+     * @example
+     * // Delete one SystemSetting
+     * const SystemSetting = await prisma.systemSetting.delete({
+     *   where: {
+     *     // ... filter to delete one SystemSetting
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SystemSettingDeleteArgs>(args: SelectSubset<T, SystemSettingDeleteArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SystemSetting.
+     * @param {SystemSettingUpdateArgs} args - Arguments to update one SystemSetting.
+     * @example
+     * // Update one SystemSetting
+     * const systemSetting = await prisma.systemSetting.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SystemSettingUpdateArgs>(args: SelectSubset<T, SystemSettingUpdateArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SystemSettings.
+     * @param {SystemSettingDeleteManyArgs} args - Arguments to filter SystemSettings to delete.
+     * @example
+     * // Delete a few SystemSettings
+     * const { count } = await prisma.systemSetting.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SystemSettingDeleteManyArgs>(args?: SelectSubset<T, SystemSettingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SystemSettings
+     * const systemSetting = await prisma.systemSetting.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SystemSettingUpdateManyArgs>(args: SelectSubset<T, SystemSettingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemSettings and returns the data updated in the database.
+     * @param {SystemSettingUpdateManyAndReturnArgs} args - Arguments to update many SystemSettings.
+     * @example
+     * // Update many SystemSettings
+     * const systemSetting = await prisma.systemSetting.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SystemSettings and only return the `id`
+     * const systemSettingWithIdOnly = await prisma.systemSetting.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SystemSettingUpdateManyAndReturnArgs>(args: SelectSubset<T, SystemSettingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SystemSetting.
+     * @param {SystemSettingUpsertArgs} args - Arguments to update or create a SystemSetting.
+     * @example
+     * // Update or create a SystemSetting
+     * const systemSetting = await prisma.systemSetting.upsert({
+     *   create: {
+     *     // ... data to create a SystemSetting
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SystemSetting we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SystemSettingUpsertArgs>(args: SelectSubset<T, SystemSettingUpsertArgs<ExtArgs>>): Prisma__SystemSettingClient<$Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SystemSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingCountArgs} args - Arguments to filter SystemSettings to count.
+     * @example
+     * // Count the number of SystemSettings
+     * const count = await prisma.systemSetting.count({
+     *   where: {
+     *     // ... the filter for the SystemSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends SystemSettingCountArgs>(
+      args?: Subset<T, SystemSettingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SystemSettingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SystemSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SystemSettingAggregateArgs>(args: Subset<T, SystemSettingAggregateArgs>): Prisma.PrismaPromise<GetSystemSettingAggregateType<T>>
+
+    /**
+     * Group by SystemSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemSettingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SystemSettingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SystemSettingGroupByArgs['orderBy'] }
+        : { orderBy?: SystemSettingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SystemSettingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSystemSettingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SystemSetting model
+   */
+  readonly fields: SystemSettingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SystemSetting.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SystemSettingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SystemSetting model
+   */
+  interface SystemSettingFieldRefs {
+    readonly id: FieldRef<"SystemSetting", 'String'>
+    readonly key: FieldRef<"SystemSetting", 'String'>
+    readonly value: FieldRef<"SystemSetting", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SystemSetting findUnique
+   */
+  export type SystemSettingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting findUniqueOrThrow
+   */
+  export type SystemSettingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting findFirst
+   */
+  export type SystemSettingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemSettings.
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemSettings.
+     */
+    distinct?: SystemSettingScalarFieldEnum | SystemSettingScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSetting findFirstOrThrow
+   */
+  export type SystemSettingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSetting to fetch.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemSettings.
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemSettings.
+     */
+    distinct?: SystemSettingScalarFieldEnum | SystemSettingScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSetting findMany
+   */
+  export type SystemSettingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which SystemSettings to fetch.
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemSettings to fetch.
+     */
+    orderBy?: SystemSettingOrderByWithRelationInput | SystemSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SystemSettings.
+     */
+    cursor?: SystemSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemSettings.
+     */
+    distinct?: SystemSettingScalarFieldEnum | SystemSettingScalarFieldEnum[]
+  }
+
+  /**
+   * SystemSetting create
+   */
+  export type SystemSettingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SystemSetting.
+     */
+    data: XOR<SystemSettingCreateInput, SystemSettingUncheckedCreateInput>
+  }
+
+  /**
+   * SystemSetting createMany
+   */
+  export type SystemSettingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SystemSettings.
+     */
+    data: SystemSettingCreateManyInput | SystemSettingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemSetting createManyAndReturn
+   */
+  export type SystemSettingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data used to create many SystemSettings.
+     */
+    data: SystemSettingCreateManyInput | SystemSettingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemSetting update
+   */
+  export type SystemSettingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SystemSetting.
+     */
+    data: XOR<SystemSettingUpdateInput, SystemSettingUncheckedUpdateInput>
+    /**
+     * Choose, which SystemSetting to update.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting updateMany
+   */
+  export type SystemSettingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SystemSettings.
+     */
+    data: XOR<SystemSettingUpdateManyMutationInput, SystemSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemSettings to update
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * Limit how many SystemSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSetting updateManyAndReturn
+   */
+  export type SystemSettingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The data used to update SystemSettings.
+     */
+    data: XOR<SystemSettingUpdateManyMutationInput, SystemSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemSettings to update
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * Limit how many SystemSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSetting upsert
+   */
+  export type SystemSettingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SystemSetting to update in case it exists.
+     */
+    where: SystemSettingWhereUniqueInput
+    /**
+     * In case the SystemSetting found by the `where` argument doesn't exist, create a new SystemSetting with this data.
+     */
+    create: XOR<SystemSettingCreateInput, SystemSettingUncheckedCreateInput>
+    /**
+     * In case the SystemSetting was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SystemSettingUpdateInput, SystemSettingUncheckedUpdateInput>
+  }
+
+  /**
+   * SystemSetting delete
+   */
+  export type SystemSettingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+    /**
+     * Filter which SystemSetting to delete.
+     */
+    where: SystemSettingWhereUniqueInput
+  }
+
+  /**
+   * SystemSetting deleteMany
+   */
+  export type SystemSettingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemSettings to delete
+     */
+    where?: SystemSettingWhereInput
+    /**
+     * Limit how many SystemSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemSetting without action
+   */
+  export type SystemSettingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemSetting
+     */
+    select?: SystemSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemSetting
+     */
+    omit?: SystemSettingOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14359,7 +15547,9 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     points_reward: 'points_reward',
-    trigger_type: 'trigger_type'
+    trigger_type: 'trigger_type',
+    trigger_count: 'trigger_count',
+    badge_reward_id: 'badge_reward_id'
   };
 
   export type MissionScalarFieldEnum = (typeof MissionScalarFieldEnum)[keyof typeof MissionScalarFieldEnum]
@@ -14422,6 +15612,15 @@ export namespace Prisma {
   };
 
   export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+  export const SystemSettingScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    value: 'value'
+  };
+
+  export type SystemSettingScalarFieldEnum = (typeof SystemSettingScalarFieldEnum)[keyof typeof SystemSettingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -14924,6 +16123,9 @@ export namespace Prisma {
     description?: StringFilter<"Mission"> | string
     points_reward?: IntFilter<"Mission"> | number
     trigger_type?: EnumTriggerTypeFilter<"Mission"> | $Enums.TriggerType
+    trigger_count?: IntFilter<"Mission"> | number
+    badge_reward_id?: StringNullableFilter<"Mission"> | string | null
+    badge_reward?: XOR<BadgeNullableScalarRelationFilter, BadgeWhereInput> | null
     user_missions?: UserMissionListRelationFilter
   }
 
@@ -14933,6 +16135,9 @@ export namespace Prisma {
     description?: SortOrder
     points_reward?: SortOrder
     trigger_type?: SortOrder
+    trigger_count?: SortOrder
+    badge_reward_id?: SortOrderInput | SortOrder
+    badge_reward?: BadgeOrderByWithRelationInput
     user_missions?: UserMissionOrderByRelationAggregateInput
   }
 
@@ -14945,6 +16150,9 @@ export namespace Prisma {
     description?: StringFilter<"Mission"> | string
     points_reward?: IntFilter<"Mission"> | number
     trigger_type?: EnumTriggerTypeFilter<"Mission"> | $Enums.TriggerType
+    trigger_count?: IntFilter<"Mission"> | number
+    badge_reward_id?: StringNullableFilter<"Mission"> | string | null
+    badge_reward?: XOR<BadgeNullableScalarRelationFilter, BadgeWhereInput> | null
     user_missions?: UserMissionListRelationFilter
   }, "id">
 
@@ -14954,6 +16162,8 @@ export namespace Prisma {
     description?: SortOrder
     points_reward?: SortOrder
     trigger_type?: SortOrder
+    trigger_count?: SortOrder
+    badge_reward_id?: SortOrderInput | SortOrder
     _count?: MissionCountOrderByAggregateInput
     _avg?: MissionAvgOrderByAggregateInput
     _max?: MissionMaxOrderByAggregateInput
@@ -14970,6 +16180,8 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Mission"> | string
     points_reward?: IntWithAggregatesFilter<"Mission"> | number
     trigger_type?: EnumTriggerTypeWithAggregatesFilter<"Mission"> | $Enums.TriggerType
+    trigger_count?: IntWithAggregatesFilter<"Mission"> | number
+    badge_reward_id?: StringNullableWithAggregatesFilter<"Mission"> | string | null
   }
 
   export type UserMissionWhereInput = {
@@ -15040,6 +16252,7 @@ export namespace Prisma {
     badge_icon_url?: StringFilter<"Badge"> | string
     description?: StringFilter<"Badge"> | string
     user_badges?: UserBadgeListRelationFilter
+    mission_rewards?: MissionListRelationFilter
   }
 
   export type BadgeOrderByWithRelationInput = {
@@ -15048,6 +16261,7 @@ export namespace Prisma {
     badge_icon_url?: SortOrder
     description?: SortOrder
     user_badges?: UserBadgeOrderByRelationAggregateInput
+    mission_rewards?: MissionOrderByRelationAggregateInput
   }
 
   export type BadgeWhereUniqueInput = Prisma.AtLeast<{
@@ -15059,6 +16273,7 @@ export namespace Prisma {
     badge_icon_url?: StringFilter<"Badge"> | string
     description?: StringFilter<"Badge"> | string
     user_badges?: UserBadgeListRelationFilter
+    mission_rewards?: MissionListRelationFilter
   }, "id">
 
   export type BadgeOrderByWithAggregationInput = {
@@ -15088,10 +16303,10 @@ export namespace Prisma {
     id?: StringFilter<"UserBadge"> | string
     user_id?: StringFilter<"UserBadge"> | string
     badge_id?: StringFilter<"UserBadge"> | string
-    awarded_by?: StringFilter<"UserBadge"> | string
+    awarded_by?: StringNullableFilter<"UserBadge"> | string | null
     awarded_at?: DateTimeFilter<"UserBadge"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
+    teacher?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     badge?: XOR<BadgeScalarRelationFilter, BadgeWhereInput>
   }
 
@@ -15099,7 +16314,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     badge_id?: SortOrder
-    awarded_by?: SortOrder
+    awarded_by?: SortOrderInput | SortOrder
     awarded_at?: SortOrder
     user?: UserOrderByWithRelationInput
     teacher?: UserOrderByWithRelationInput
@@ -15108,23 +16323,24 @@ export namespace Prisma {
 
   export type UserBadgeWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    user_id_badge_id?: UserBadgeUser_idBadge_idCompoundUniqueInput
     AND?: UserBadgeWhereInput | UserBadgeWhereInput[]
     OR?: UserBadgeWhereInput[]
     NOT?: UserBadgeWhereInput | UserBadgeWhereInput[]
     user_id?: StringFilter<"UserBadge"> | string
     badge_id?: StringFilter<"UserBadge"> | string
-    awarded_by?: StringFilter<"UserBadge"> | string
+    awarded_by?: StringNullableFilter<"UserBadge"> | string | null
     awarded_at?: DateTimeFilter<"UserBadge"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
+    teacher?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     badge?: XOR<BadgeScalarRelationFilter, BadgeWhereInput>
-  }, "id">
+  }, "id" | "user_id_badge_id">
 
   export type UserBadgeOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
     badge_id?: SortOrder
-    awarded_by?: SortOrder
+    awarded_by?: SortOrderInput | SortOrder
     awarded_at?: SortOrder
     _count?: UserBadgeCountOrderByAggregateInput
     _max?: UserBadgeMaxOrderByAggregateInput
@@ -15138,7 +16354,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"UserBadge"> | string
     user_id?: StringWithAggregatesFilter<"UserBadge"> | string
     badge_id?: StringWithAggregatesFilter<"UserBadge"> | string
-    awarded_by?: StringWithAggregatesFilter<"UserBadge"> | string
+    awarded_by?: StringNullableWithAggregatesFilter<"UserBadge"> | string | null
     awarded_at?: DateTimeWithAggregatesFilter<"UserBadge"> | Date | string
   }
 
@@ -15280,6 +16496,48 @@ export namespace Prisma {
     points_awarded?: IntNullableWithAggregatesFilter<"Project"> | number | null
     teacher_feedback?: StringNullableWithAggregatesFilter<"Project"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"Project"> | Date | string
+  }
+
+  export type SystemSettingWhereInput = {
+    AND?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    OR?: SystemSettingWhereInput[]
+    NOT?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    id?: StringFilter<"SystemSetting"> | string
+    key?: StringFilter<"SystemSetting"> | string
+    value?: StringFilter<"SystemSetting"> | string
+  }
+
+  export type SystemSettingOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SystemSettingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    AND?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    OR?: SystemSettingWhereInput[]
+    NOT?: SystemSettingWhereInput | SystemSettingWhereInput[]
+    value?: StringFilter<"SystemSetting"> | string
+  }, "id" | "key">
+
+  export type SystemSettingOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    _count?: SystemSettingCountOrderByAggregateInput
+    _max?: SystemSettingMaxOrderByAggregateInput
+    _min?: SystemSettingMinOrderByAggregateInput
+  }
+
+  export type SystemSettingScalarWhereWithAggregatesInput = {
+    AND?: SystemSettingScalarWhereWithAggregatesInput | SystemSettingScalarWhereWithAggregatesInput[]
+    OR?: SystemSettingScalarWhereWithAggregatesInput[]
+    NOT?: SystemSettingScalarWhereWithAggregatesInput | SystemSettingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SystemSetting"> | string
+    key?: StringWithAggregatesFilter<"SystemSetting"> | string
+    value?: StringWithAggregatesFilter<"SystemSetting"> | string
   }
 
   export type UserCreateInput = {
@@ -15632,6 +16890,8 @@ export namespace Prisma {
     description: string
     points_reward: number
     trigger_type: $Enums.TriggerType
+    trigger_count?: number
+    badge_reward?: BadgeCreateNestedOneWithoutMission_rewardsInput
     user_missions?: UserMissionCreateNestedManyWithoutMissionInput
   }
 
@@ -15641,6 +16901,8 @@ export namespace Prisma {
     description: string
     points_reward: number
     trigger_type: $Enums.TriggerType
+    trigger_count?: number
+    badge_reward_id?: string | null
     user_missions?: UserMissionUncheckedCreateNestedManyWithoutMissionInput
   }
 
@@ -15650,6 +16912,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     points_reward?: IntFieldUpdateOperationsInput | number
     trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
+    badge_reward?: BadgeUpdateOneWithoutMission_rewardsNestedInput
     user_missions?: UserMissionUpdateManyWithoutMissionNestedInput
   }
 
@@ -15659,6 +16923,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     points_reward?: IntFieldUpdateOperationsInput | number
     trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
+    badge_reward_id?: NullableStringFieldUpdateOperationsInput | string | null
     user_missions?: UserMissionUncheckedUpdateManyWithoutMissionNestedInput
   }
 
@@ -15668,6 +16934,8 @@ export namespace Prisma {
     description: string
     points_reward: number
     trigger_type: $Enums.TriggerType
+    trigger_count?: number
+    badge_reward_id?: string | null
   }
 
   export type MissionUpdateManyMutationInput = {
@@ -15676,6 +16944,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     points_reward?: IntFieldUpdateOperationsInput | number
     trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
   }
 
   export type MissionUncheckedUpdateManyInput = {
@@ -15684,6 +16953,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     points_reward?: IntFieldUpdateOperationsInput | number
     trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
+    badge_reward_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserMissionCreateInput = {
@@ -15746,6 +17017,7 @@ export namespace Prisma {
     badge_icon_url: string
     description: string
     user_badges?: UserBadgeCreateNestedManyWithoutBadgeInput
+    mission_rewards?: MissionCreateNestedManyWithoutBadge_rewardInput
   }
 
   export type BadgeUncheckedCreateInput = {
@@ -15754,6 +17026,7 @@ export namespace Prisma {
     badge_icon_url: string
     description: string
     user_badges?: UserBadgeUncheckedCreateNestedManyWithoutBadgeInput
+    mission_rewards?: MissionUncheckedCreateNestedManyWithoutBadge_rewardInput
   }
 
   export type BadgeUpdateInput = {
@@ -15762,6 +17035,7 @@ export namespace Prisma {
     badge_icon_url?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     user_badges?: UserBadgeUpdateManyWithoutBadgeNestedInput
+    mission_rewards?: MissionUpdateManyWithoutBadge_rewardNestedInput
   }
 
   export type BadgeUncheckedUpdateInput = {
@@ -15770,6 +17044,7 @@ export namespace Prisma {
     badge_icon_url?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     user_badges?: UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput
+    mission_rewards?: MissionUncheckedUpdateManyWithoutBadge_rewardNestedInput
   }
 
   export type BadgeCreateManyInput = {
@@ -15797,7 +17072,7 @@ export namespace Prisma {
     id?: string
     awarded_at?: Date | string
     user: UserCreateNestedOneWithoutBadges_receivedInput
-    teacher: UserCreateNestedOneWithoutBadges_givenInput
+    teacher?: UserCreateNestedOneWithoutBadges_givenInput
     badge: BadgeCreateNestedOneWithoutUser_badgesInput
   }
 
@@ -15805,7 +17080,7 @@ export namespace Prisma {
     id?: string
     user_id: string
     badge_id: string
-    awarded_by: string
+    awarded_by?: string | null
     awarded_at?: Date | string
   }
 
@@ -15813,7 +17088,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutBadges_receivedNestedInput
-    teacher?: UserUpdateOneRequiredWithoutBadges_givenNestedInput
+    teacher?: UserUpdateOneWithoutBadges_givenNestedInput
     badge?: BadgeUpdateOneRequiredWithoutUser_badgesNestedInput
   }
 
@@ -15821,7 +17096,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     badge_id?: StringFieldUpdateOperationsInput | string
-    awarded_by?: StringFieldUpdateOperationsInput | string
+    awarded_by?: NullableStringFieldUpdateOperationsInput | string | null
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -15829,7 +17104,7 @@ export namespace Prisma {
     id?: string
     user_id: string
     badge_id: string
-    awarded_by: string
+    awarded_by?: string | null
     awarded_at?: Date | string
   }
 
@@ -15842,7 +17117,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     badge_id?: StringFieldUpdateOperationsInput | string
-    awarded_by?: StringFieldUpdateOperationsInput | string
+    awarded_by?: NullableStringFieldUpdateOperationsInput | string | null
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -15988,6 +17263,48 @@ export namespace Prisma {
     points_awarded?: NullableIntFieldUpdateOperationsInput | number | null
     teacher_feedback?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemSettingCreateInput = {
+    id?: string
+    key: string
+    value: string
+  }
+
+  export type SystemSettingUncheckedCreateInput = {
+    id?: string
+    key: string
+    value: string
+  }
+
+  export type SystemSettingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SystemSettingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SystemSettingCreateManyInput = {
+    id?: string
+    key: string
+    value: string
+  }
+
+  export type SystemSettingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SystemSettingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -16417,16 +17734,24 @@ export namespace Prisma {
     not?: NestedEnumTriggerTypeFilter<$PrismaModel> | $Enums.TriggerType
   }
 
+  export type BadgeNullableScalarRelationFilter = {
+    is?: BadgeWhereInput | null
+    isNot?: BadgeWhereInput | null
+  }
+
   export type MissionCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     points_reward?: SortOrder
     trigger_type?: SortOrder
+    trigger_count?: SortOrder
+    badge_reward_id?: SortOrder
   }
 
   export type MissionAvgOrderByAggregateInput = {
     points_reward?: SortOrder
+    trigger_count?: SortOrder
   }
 
   export type MissionMaxOrderByAggregateInput = {
@@ -16435,6 +17760,8 @@ export namespace Prisma {
     description?: SortOrder
     points_reward?: SortOrder
     trigger_type?: SortOrder
+    trigger_count?: SortOrder
+    badge_reward_id?: SortOrder
   }
 
   export type MissionMinOrderByAggregateInput = {
@@ -16443,10 +17770,13 @@ export namespace Prisma {
     description?: SortOrder
     points_reward?: SortOrder
     trigger_type?: SortOrder
+    trigger_count?: SortOrder
+    badge_reward_id?: SortOrder
   }
 
   export type MissionSumOrderByAggregateInput = {
     points_reward?: SortOrder
+    trigger_count?: SortOrder
   }
 
   export type EnumTriggerTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -16510,6 +17840,16 @@ export namespace Prisma {
     _max?: NestedEnumMissionStatusFilter<$PrismaModel>
   }
 
+  export type MissionListRelationFilter = {
+    every?: MissionWhereInput
+    some?: MissionWhereInput
+    none?: MissionWhereInput
+  }
+
+  export type MissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type BadgeCountOrderByAggregateInput = {
     id?: SortOrder
     badge_name?: SortOrder
@@ -16531,9 +17871,19 @@ export namespace Prisma {
     description?: SortOrder
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type BadgeScalarRelationFilter = {
     is?: BadgeWhereInput
     isNot?: BadgeWhereInput
+  }
+
+  export type UserBadgeUser_idBadge_idCompoundUniqueInput = {
+    user_id: string
+    badge_id: string
   }
 
   export type UserBadgeCountOrderByAggregateInput = {
@@ -16684,6 +18034,24 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type SystemSettingCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SystemSettingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SystemSettingMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
   }
 
   export type TeamMemberCreateNestedManyWithoutUserInput = {
@@ -17198,6 +18566,12 @@ export namespace Prisma {
     update?: XOR<XOR<ModuleUpdateToOneWithWhereWithoutProgressInput, ModuleUpdateWithoutProgressInput>, ModuleUncheckedUpdateWithoutProgressInput>
   }
 
+  export type BadgeCreateNestedOneWithoutMission_rewardsInput = {
+    create?: XOR<BadgeCreateWithoutMission_rewardsInput, BadgeUncheckedCreateWithoutMission_rewardsInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutMission_rewardsInput
+    connect?: BadgeWhereUniqueInput
+  }
+
   export type UserMissionCreateNestedManyWithoutMissionInput = {
     create?: XOR<UserMissionCreateWithoutMissionInput, UserMissionUncheckedCreateWithoutMissionInput> | UserMissionCreateWithoutMissionInput[] | UserMissionUncheckedCreateWithoutMissionInput[]
     connectOrCreate?: UserMissionCreateOrConnectWithoutMissionInput | UserMissionCreateOrConnectWithoutMissionInput[]
@@ -17214,6 +18588,16 @@ export namespace Prisma {
 
   export type EnumTriggerTypeFieldUpdateOperationsInput = {
     set?: $Enums.TriggerType
+  }
+
+  export type BadgeUpdateOneWithoutMission_rewardsNestedInput = {
+    create?: XOR<BadgeCreateWithoutMission_rewardsInput, BadgeUncheckedCreateWithoutMission_rewardsInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutMission_rewardsInput
+    upsert?: BadgeUpsertWithoutMission_rewardsInput
+    disconnect?: BadgeWhereInput | boolean
+    delete?: BadgeWhereInput | boolean
+    connect?: BadgeWhereUniqueInput
+    update?: XOR<XOR<BadgeUpdateToOneWithWhereWithoutMission_rewardsInput, BadgeUpdateWithoutMission_rewardsInput>, BadgeUncheckedUpdateWithoutMission_rewardsInput>
   }
 
   export type UserMissionUpdateManyWithoutMissionNestedInput = {
@@ -17283,11 +18667,25 @@ export namespace Prisma {
     connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
   }
 
+  export type MissionCreateNestedManyWithoutBadge_rewardInput = {
+    create?: XOR<MissionCreateWithoutBadge_rewardInput, MissionUncheckedCreateWithoutBadge_rewardInput> | MissionCreateWithoutBadge_rewardInput[] | MissionUncheckedCreateWithoutBadge_rewardInput[]
+    connectOrCreate?: MissionCreateOrConnectWithoutBadge_rewardInput | MissionCreateOrConnectWithoutBadge_rewardInput[]
+    createMany?: MissionCreateManyBadge_rewardInputEnvelope
+    connect?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+  }
+
   export type UserBadgeUncheckedCreateNestedManyWithoutBadgeInput = {
     create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
     connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
     createMany?: UserBadgeCreateManyBadgeInputEnvelope
     connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type MissionUncheckedCreateNestedManyWithoutBadge_rewardInput = {
+    create?: XOR<MissionCreateWithoutBadge_rewardInput, MissionUncheckedCreateWithoutBadge_rewardInput> | MissionCreateWithoutBadge_rewardInput[] | MissionUncheckedCreateWithoutBadge_rewardInput[]
+    connectOrCreate?: MissionCreateOrConnectWithoutBadge_rewardInput | MissionCreateOrConnectWithoutBadge_rewardInput[]
+    createMany?: MissionCreateManyBadge_rewardInputEnvelope
+    connect?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
   }
 
   export type UserBadgeUpdateManyWithoutBadgeNestedInput = {
@@ -17304,6 +18702,20 @@ export namespace Prisma {
     deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
   }
 
+  export type MissionUpdateManyWithoutBadge_rewardNestedInput = {
+    create?: XOR<MissionCreateWithoutBadge_rewardInput, MissionUncheckedCreateWithoutBadge_rewardInput> | MissionCreateWithoutBadge_rewardInput[] | MissionUncheckedCreateWithoutBadge_rewardInput[]
+    connectOrCreate?: MissionCreateOrConnectWithoutBadge_rewardInput | MissionCreateOrConnectWithoutBadge_rewardInput[]
+    upsert?: MissionUpsertWithWhereUniqueWithoutBadge_rewardInput | MissionUpsertWithWhereUniqueWithoutBadge_rewardInput[]
+    createMany?: MissionCreateManyBadge_rewardInputEnvelope
+    set?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    disconnect?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    delete?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    connect?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    update?: MissionUpdateWithWhereUniqueWithoutBadge_rewardInput | MissionUpdateWithWhereUniqueWithoutBadge_rewardInput[]
+    updateMany?: MissionUpdateManyWithWhereWithoutBadge_rewardInput | MissionUpdateManyWithWhereWithoutBadge_rewardInput[]
+    deleteMany?: MissionScalarWhereInput | MissionScalarWhereInput[]
+  }
+
   export type UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput = {
     create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
     connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
@@ -17316,6 +18728,20 @@ export namespace Prisma {
     update?: UserBadgeUpdateWithWhereUniqueWithoutBadgeInput | UserBadgeUpdateWithWhereUniqueWithoutBadgeInput[]
     updateMany?: UserBadgeUpdateManyWithWhereWithoutBadgeInput | UserBadgeUpdateManyWithWhereWithoutBadgeInput[]
     deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type MissionUncheckedUpdateManyWithoutBadge_rewardNestedInput = {
+    create?: XOR<MissionCreateWithoutBadge_rewardInput, MissionUncheckedCreateWithoutBadge_rewardInput> | MissionCreateWithoutBadge_rewardInput[] | MissionUncheckedCreateWithoutBadge_rewardInput[]
+    connectOrCreate?: MissionCreateOrConnectWithoutBadge_rewardInput | MissionCreateOrConnectWithoutBadge_rewardInput[]
+    upsert?: MissionUpsertWithWhereUniqueWithoutBadge_rewardInput | MissionUpsertWithWhereUniqueWithoutBadge_rewardInput[]
+    createMany?: MissionCreateManyBadge_rewardInputEnvelope
+    set?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    disconnect?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    delete?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    connect?: MissionWhereUniqueInput | MissionWhereUniqueInput[]
+    update?: MissionUpdateWithWhereUniqueWithoutBadge_rewardInput | MissionUpdateWithWhereUniqueWithoutBadge_rewardInput[]
+    updateMany?: MissionUpdateManyWithWhereWithoutBadge_rewardInput | MissionUpdateManyWithWhereWithoutBadge_rewardInput[]
+    deleteMany?: MissionScalarWhereInput | MissionScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutBadges_receivedInput = {
@@ -17344,10 +18770,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBadges_receivedInput, UserUpdateWithoutBadges_receivedInput>, UserUncheckedUpdateWithoutBadges_receivedInput>
   }
 
-  export type UserUpdateOneRequiredWithoutBadges_givenNestedInput = {
+  export type UserUpdateOneWithoutBadges_givenNestedInput = {
     create?: XOR<UserCreateWithoutBadges_givenInput, UserUncheckedCreateWithoutBadges_givenInput>
     connectOrCreate?: UserCreateOrConnectWithoutBadges_givenInput
     upsert?: UserUpsertWithoutBadges_givenInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBadges_givenInput, UserUpdateWithoutBadges_givenInput>, UserUncheckedUpdateWithoutBadges_givenInput>
   }
@@ -17810,14 +19238,14 @@ export namespace Prisma {
   export type UserBadgeCreateWithoutUserInput = {
     id?: string
     awarded_at?: Date | string
-    teacher: UserCreateNestedOneWithoutBadges_givenInput
+    teacher?: UserCreateNestedOneWithoutBadges_givenInput
     badge: BadgeCreateNestedOneWithoutUser_badgesInput
   }
 
   export type UserBadgeUncheckedCreateWithoutUserInput = {
     id?: string
     badge_id: string
-    awarded_by: string
+    awarded_by?: string | null
     awarded_at?: Date | string
   }
 
@@ -17986,7 +19414,7 @@ export namespace Prisma {
     id?: StringFilter<"UserBadge"> | string
     user_id?: StringFilter<"UserBadge"> | string
     badge_id?: StringFilter<"UserBadge"> | string
-    awarded_by?: StringFilter<"UserBadge"> | string
+    awarded_by?: StringNullableFilter<"UserBadge"> | string | null
     awarded_at?: DateTimeFilter<"UserBadge"> | Date | string
   }
 
@@ -18465,6 +19893,27 @@ export namespace Prisma {
     thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type BadgeCreateWithoutMission_rewardsInput = {
+    id?: string
+    badge_name: string
+    badge_icon_url: string
+    description: string
+    user_badges?: UserBadgeCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeUncheckedCreateWithoutMission_rewardsInput = {
+    id?: string
+    badge_name: string
+    badge_icon_url: string
+    description: string
+    user_badges?: UserBadgeUncheckedCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeCreateOrConnectWithoutMission_rewardsInput = {
+    where: BadgeWhereUniqueInput
+    create: XOR<BadgeCreateWithoutMission_rewardsInput, BadgeUncheckedCreateWithoutMission_rewardsInput>
+  }
+
   export type UserMissionCreateWithoutMissionInput = {
     id?: string
     status?: $Enums.MissionStatus
@@ -18487,6 +19936,33 @@ export namespace Prisma {
   export type UserMissionCreateManyMissionInputEnvelope = {
     data: UserMissionCreateManyMissionInput | UserMissionCreateManyMissionInput[]
     skipDuplicates?: boolean
+  }
+
+  export type BadgeUpsertWithoutMission_rewardsInput = {
+    update: XOR<BadgeUpdateWithoutMission_rewardsInput, BadgeUncheckedUpdateWithoutMission_rewardsInput>
+    create: XOR<BadgeCreateWithoutMission_rewardsInput, BadgeUncheckedCreateWithoutMission_rewardsInput>
+    where?: BadgeWhereInput
+  }
+
+  export type BadgeUpdateToOneWithWhereWithoutMission_rewardsInput = {
+    where?: BadgeWhereInput
+    data: XOR<BadgeUpdateWithoutMission_rewardsInput, BadgeUncheckedUpdateWithoutMission_rewardsInput>
+  }
+
+  export type BadgeUpdateWithoutMission_rewardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    badge_name?: StringFieldUpdateOperationsInput | string
+    badge_icon_url?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    user_badges?: UserBadgeUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type BadgeUncheckedUpdateWithoutMission_rewardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    badge_name?: StringFieldUpdateOperationsInput | string
+    badge_icon_url?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    user_badges?: UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput
   }
 
   export type UserMissionUpsertWithWhereUniqueWithoutMissionInput = {
@@ -18550,6 +20026,8 @@ export namespace Prisma {
     description: string
     points_reward: number
     trigger_type: $Enums.TriggerType
+    trigger_count?: number
+    badge_reward?: BadgeCreateNestedOneWithoutMission_rewardsInput
   }
 
   export type MissionUncheckedCreateWithoutUser_missionsInput = {
@@ -18558,6 +20036,8 @@ export namespace Prisma {
     description: string
     points_reward: number
     trigger_type: $Enums.TriggerType
+    trigger_count?: number
+    badge_reward_id?: string | null
   }
 
   export type MissionCreateOrConnectWithoutUser_missionsInput = {
@@ -18627,6 +20107,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     points_reward?: IntFieldUpdateOperationsInput | number
     trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
+    badge_reward?: BadgeUpdateOneWithoutMission_rewardsNestedInput
   }
 
   export type MissionUncheckedUpdateWithoutUser_missionsInput = {
@@ -18635,19 +20117,21 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     points_reward?: IntFieldUpdateOperationsInput | number
     trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
+    badge_reward_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserBadgeCreateWithoutBadgeInput = {
     id?: string
     awarded_at?: Date | string
     user: UserCreateNestedOneWithoutBadges_receivedInput
-    teacher: UserCreateNestedOneWithoutBadges_givenInput
+    teacher?: UserCreateNestedOneWithoutBadges_givenInput
   }
 
   export type UserBadgeUncheckedCreateWithoutBadgeInput = {
     id?: string
     user_id: string
-    awarded_by: string
+    awarded_by?: string | null
     awarded_at?: Date | string
   }
 
@@ -18658,6 +20142,36 @@ export namespace Prisma {
 
   export type UserBadgeCreateManyBadgeInputEnvelope = {
     data: UserBadgeCreateManyBadgeInput | UserBadgeCreateManyBadgeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MissionCreateWithoutBadge_rewardInput = {
+    id?: string
+    title: string
+    description: string
+    points_reward: number
+    trigger_type: $Enums.TriggerType
+    trigger_count?: number
+    user_missions?: UserMissionCreateNestedManyWithoutMissionInput
+  }
+
+  export type MissionUncheckedCreateWithoutBadge_rewardInput = {
+    id?: string
+    title: string
+    description: string
+    points_reward: number
+    trigger_type: $Enums.TriggerType
+    trigger_count?: number
+    user_missions?: UserMissionUncheckedCreateNestedManyWithoutMissionInput
+  }
+
+  export type MissionCreateOrConnectWithoutBadge_rewardInput = {
+    where: MissionWhereUniqueInput
+    create: XOR<MissionCreateWithoutBadge_rewardInput, MissionUncheckedCreateWithoutBadge_rewardInput>
+  }
+
+  export type MissionCreateManyBadge_rewardInputEnvelope = {
+    data: MissionCreateManyBadge_rewardInput | MissionCreateManyBadge_rewardInput[]
     skipDuplicates?: boolean
   }
 
@@ -18675,6 +20189,35 @@ export namespace Prisma {
   export type UserBadgeUpdateManyWithWhereWithoutBadgeInput = {
     where: UserBadgeScalarWhereInput
     data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyWithoutBadgeInput>
+  }
+
+  export type MissionUpsertWithWhereUniqueWithoutBadge_rewardInput = {
+    where: MissionWhereUniqueInput
+    update: XOR<MissionUpdateWithoutBadge_rewardInput, MissionUncheckedUpdateWithoutBadge_rewardInput>
+    create: XOR<MissionCreateWithoutBadge_rewardInput, MissionUncheckedCreateWithoutBadge_rewardInput>
+  }
+
+  export type MissionUpdateWithWhereUniqueWithoutBadge_rewardInput = {
+    where: MissionWhereUniqueInput
+    data: XOR<MissionUpdateWithoutBadge_rewardInput, MissionUncheckedUpdateWithoutBadge_rewardInput>
+  }
+
+  export type MissionUpdateManyWithWhereWithoutBadge_rewardInput = {
+    where: MissionScalarWhereInput
+    data: XOR<MissionUpdateManyMutationInput, MissionUncheckedUpdateManyWithoutBadge_rewardInput>
+  }
+
+  export type MissionScalarWhereInput = {
+    AND?: MissionScalarWhereInput | MissionScalarWhereInput[]
+    OR?: MissionScalarWhereInput[]
+    NOT?: MissionScalarWhereInput | MissionScalarWhereInput[]
+    id?: StringFilter<"Mission"> | string
+    title?: StringFilter<"Mission"> | string
+    description?: StringFilter<"Mission"> | string
+    points_reward?: IntFilter<"Mission"> | number
+    trigger_type?: EnumTriggerTypeFilter<"Mission"> | $Enums.TriggerType
+    trigger_count?: IntFilter<"Mission"> | number
+    badge_reward_id?: StringNullableFilter<"Mission"> | string | null
   }
 
   export type UserCreateWithoutBadges_receivedInput = {
@@ -18760,6 +20303,7 @@ export namespace Prisma {
     badge_name: string
     badge_icon_url: string
     description: string
+    mission_rewards?: MissionCreateNestedManyWithoutBadge_rewardInput
   }
 
   export type BadgeUncheckedCreateWithoutUser_badgesInput = {
@@ -18767,6 +20311,7 @@ export namespace Prisma {
     badge_name: string
     badge_icon_url: string
     description: string
+    mission_rewards?: MissionUncheckedCreateNestedManyWithoutBadge_rewardInput
   }
 
   export type BadgeCreateOrConnectWithoutUser_badgesInput = {
@@ -18880,6 +20425,7 @@ export namespace Prisma {
     badge_name?: StringFieldUpdateOperationsInput | string
     badge_icon_url?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    mission_rewards?: MissionUpdateManyWithoutBadge_rewardNestedInput
   }
 
   export type BadgeUncheckedUpdateWithoutUser_badgesInput = {
@@ -18887,6 +20433,7 @@ export namespace Prisma {
     badge_name?: StringFieldUpdateOperationsInput | string
     badge_icon_url?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    mission_rewards?: MissionUncheckedUpdateManyWithoutBadge_rewardNestedInput
   }
 
   export type UserCreateWithoutMessagesInput = {
@@ -19108,7 +20655,7 @@ export namespace Prisma {
   export type UserBadgeCreateManyUserInput = {
     id?: string
     badge_id: string
-    awarded_by: string
+    awarded_by?: string | null
     awarded_at?: Date | string
   }
 
@@ -19206,21 +20753,21 @@ export namespace Prisma {
   export type UserBadgeUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    teacher?: UserUpdateOneRequiredWithoutBadges_givenNestedInput
+    teacher?: UserUpdateOneWithoutBadges_givenNestedInput
     badge?: BadgeUpdateOneRequiredWithoutUser_badgesNestedInput
   }
 
   export type UserBadgeUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     badge_id?: StringFieldUpdateOperationsInput | string
-    awarded_by?: StringFieldUpdateOperationsInput | string
+    awarded_by?: NullableStringFieldUpdateOperationsInput | string | null
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserBadgeUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     badge_id?: StringFieldUpdateOperationsInput | string
-    awarded_by?: StringFieldUpdateOperationsInput | string
+    awarded_by?: NullableStringFieldUpdateOperationsInput | string | null
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19404,29 +20951,67 @@ export namespace Prisma {
   export type UserBadgeCreateManyBadgeInput = {
     id?: string
     user_id: string
-    awarded_by: string
+    awarded_by?: string | null
     awarded_at?: Date | string
+  }
+
+  export type MissionCreateManyBadge_rewardInput = {
+    id?: string
+    title: string
+    description: string
+    points_reward: number
+    trigger_type: $Enums.TriggerType
+    trigger_count?: number
   }
 
   export type UserBadgeUpdateWithoutBadgeInput = {
     id?: StringFieldUpdateOperationsInput | string
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutBadges_receivedNestedInput
-    teacher?: UserUpdateOneRequiredWithoutBadges_givenNestedInput
+    teacher?: UserUpdateOneWithoutBadges_givenNestedInput
   }
 
   export type UserBadgeUncheckedUpdateWithoutBadgeInput = {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
-    awarded_by?: StringFieldUpdateOperationsInput | string
+    awarded_by?: NullableStringFieldUpdateOperationsInput | string | null
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserBadgeUncheckedUpdateManyWithoutBadgeInput = {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
-    awarded_by?: StringFieldUpdateOperationsInput | string
+    awarded_by?: NullableStringFieldUpdateOperationsInput | string | null
     awarded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MissionUpdateWithoutBadge_rewardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    points_reward?: IntFieldUpdateOperationsInput | number
+    trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
+    user_missions?: UserMissionUpdateManyWithoutMissionNestedInput
+  }
+
+  export type MissionUncheckedUpdateWithoutBadge_rewardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    points_reward?: IntFieldUpdateOperationsInput | number
+    trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
+    user_missions?: UserMissionUncheckedUpdateManyWithoutMissionNestedInput
+  }
+
+  export type MissionUncheckedUpdateManyWithoutBadge_rewardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    points_reward?: IntFieldUpdateOperationsInput | number
+    trigger_type?: EnumTriggerTypeFieldUpdateOperationsInput | $Enums.TriggerType
+    trigger_count?: IntFieldUpdateOperationsInput | number
   }
 
 

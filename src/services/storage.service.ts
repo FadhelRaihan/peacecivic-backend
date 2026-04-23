@@ -29,6 +29,12 @@ const storage = new CloudinaryStorage({
     } else if (file.fieldname === 'avatar') {
         folder = 'peace-civic/avatars';
         resource_type = 'image';
+    } else if (file.fieldname === 'thumbnail') {
+        folder = 'peace-civic/thumbnails';
+        resource_type = 'image';
+    } else if (file.fieldname === 'pdf') {
+        folder = 'peace-civic/modules';
+        resource_type = 'auto';
     }
 
     return {
@@ -43,6 +49,6 @@ const storage = new CloudinaryStorage({
 export const upload = multer({ 
     storage: storage,
     limits: {
-        fileSize: 50 * 1024 * 1024, // 50MB limit
+        fileSize: 50 * 1024 * 1024, 
     }
 });

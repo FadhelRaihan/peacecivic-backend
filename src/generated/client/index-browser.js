@@ -169,7 +169,9 @@ exports.Prisma.MissionScalarFieldEnum = {
   title: 'title',
   description: 'description',
   points_reward: 'points_reward',
-  trigger_type: 'trigger_type'
+  trigger_type: 'trigger_type',
+  trigger_count: 'trigger_count',
+  badge_reward_id: 'badge_reward_id'
 };
 
 exports.Prisma.UserMissionScalarFieldEnum = {
@@ -214,6 +216,12 @@ exports.Prisma.ProjectScalarFieldEnum = {
   points_awarded: 'points_awarded',
   teacher_feedback: 'teacher_feedback',
   created_at: 'created_at'
+};
+
+exports.Prisma.SystemSettingScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value'
 };
 
 exports.Prisma.SortOrder = {
@@ -271,7 +279,8 @@ exports.Prisma.ModelName = {
   Badge: 'Badge',
   UserBadge: 'UserBadge',
   Message: 'Message',
-  Project: 'Project'
+  Project: 'Project',
+  SystemSetting: 'SystemSetting'
 };
 
 /**

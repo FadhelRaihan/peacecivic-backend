@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
-import { ModuleCategory } from '../generated/client';
+import { ModuleCategory, TriggerType } from '../generated/client';
+import { checkMissions } from '../services/automation.service';
 
 export const getAllModules = async (req: Request, res: Response) => {
     try {
@@ -102,6 +103,9 @@ export const markModuleAsComplete = async (req: any, res: Response) => {
             where: { id: userId },
             data: { points: { increment: 1 } }
         })
+
+        // Automation: Check Missions
+        await checkMissions(userId, TriggerType.READ_MODULE);
 
         res.status(200).json({ message: 'Modul berhasil diselesaikan', progress });
     } catch (error: any) {

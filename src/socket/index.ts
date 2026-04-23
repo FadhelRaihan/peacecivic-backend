@@ -1,6 +1,8 @@
 import { Server, Socket } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import prisma from '../lib/prisma';
+import { TriggerType } from '../generated/client';
+import { checkMissions } from '../services/automation.service';
 
 export const setupSocket = (io: Server) => {
     io.use((socket, next) => {
@@ -88,6 +90,9 @@ export const setupSocket = (io: Server) => {
                 } else if (team_id) {
                     io.to(`team_room_${team_id}`).emit('receive_message', savedMessage);
                 }
+
+                // Automation: Check Missions
+                await checkMissions(userId, TriggerType.CHAT_COUNT);
 
             } catch (error) {
                 console.error('Gagal menyimpan atau mengirim pesan:', error);

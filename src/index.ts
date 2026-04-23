@@ -14,6 +14,7 @@ import userRoutes from './routes/user.routes';
 import teacherRoutes from './routes/teacher.routes';
 import leaderboardRoutes from './routes/leaderboard.routes';
 import badgeRoutes from './routes/badge.routes';
+import adminRoutes from './routes/admin.routes';
 import { setupSocket } from './socket/index';
 
 const app: Application = express();
@@ -87,3 +88,6 @@ app.use('/api/leaderboard', leaderboardRoutes);
 
 // Badge Routes
 app.use('/api/badges', badgeRoutes);
+
+// Admin Routes
+app.use('/api/admin', adminRoutes);

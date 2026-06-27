@@ -1,14 +1,10 @@
-import { Pool } from 'pg';
-import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/client';
 import * as dotenv from 'dotenv';
+import * as bcrypt from 'bcryptjs';
 
 dotenv.config();
 
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient();
 
 async function main() {
   console.log('Sedang menyemai data modul dengan PDF...');
@@ -49,6 +45,43 @@ async function main() {
   }
 
   console.log('Berhasil menyemai data modul dengan PDF!');
+
+  console.log('Sedang menyemai data pengguna (Users)...');
+
+  const salt = await bcrypt.genSalt(10);
+  const defaultPasswordHash = await bcrypt.hash('password123', salt);
+
+  const users = [
+    {
+      full_name: 'Admin PeaceCivic',
+      email: 'admin@peacecivic.com',
+      password_hash: defaultPasswordHash,
+      role: 'ADMIN' as any,
+    },
+    {
+      full_name: 'Guru PeaceCivic',
+      email: 'guru@peacecivic.com',
+      password_hash: defaultPasswordHash,
+      role: 'TEACHER' as any,
+    },
+    {
+      full_name: 'Siswa PeaceCivic',
+      email: 'siswa@peacecivic.com',
+      password_hash: defaultPasswordHash,
+      role: 'STUDENT' as any,
+      class_room: 'X-A',
+    },
+  ];
+
+  for (const user of users) {
+    await prisma.user.upsert({
+      where: { email: user.email },
+      update: user,
+      create: user,
+    });
+  }
+
+  console.log('Berhasil menyemai data pengguna!');
 }
 
 main()
